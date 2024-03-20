@@ -1,1 +1,176 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'sass:map';
+@use 'sass:meta';
+
+@include mat.core();
+
+$info-palette: (
+  50 : #f5e6fd,
+  100 : #e6c2fb,
+  200 : #d599f8,
+  300 : #c470f5,
+  400 : #b751f3,
+  500 : #aa32f1,
+  600 : #a32def,
+  700 : #9926ed,
+  800 : #901feb,
+  900 : #7f13e7,
+  A100 : #ffffff,
+  A200 : #f0e2ff,
+  A400 : #d5afff,
+  A700 : #c896ff,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+
+$warning-palette: (
+  50 : #fdf8e6,
+  100 : #fbedc2,
+  200 : #f8e199,
+  300 : #f5d470,
+  400 : #f3cb51,
+  500 : #f1c232,
+  600 : #efbc2d,
+  700 : #edb426,
+  800 : #ebac1f,
+  900 : #e79f13,
+  A100 : #ffffff,
+  A200 : #fff4e2,
+  A400 : #ffe2af,
+  A700 : #ffd896,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #000000,
+      800 : #000000,
+      900 : #000000,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+
+$success-palette: (
+    50 : #eef9e9,
+    100 : #d5f1c9,
+    200 : #b9e8a5,
+    300 : #9dde81,
+    400 : #88d766,
+    500 : #73d04b,
+    600 : #6bcb44,
+    700 : #60c43b,
+    800 : #56be33,
+    900 : #43b323,
+    A100 : #f2ffef,
+    A200 : #c9ffbc,
+    A400 : #a0ff89,
+    A700 : #8cff6f,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+// определяю цвета:
+
+$my-primary: mat.define-palette($info-palette, 500);
+$my-accent: mat.define-palette($warning-palette, 700);
+$my-warn: mat.define-palette(mat.$red-palette);
+$my-success: mat.define-palette($success-palette, A200, A100, A400);
+
+//пишу функции, чтобы расширить количество цветов доступных в теме:
+@function my-light-theme($primary, $accent, $warn: mat.$red-palette, $success: mat.$green-palette) {
+  @return map-merge(mat.define-light-theme($primary, $accent, $warn), (success: $success));
+}
+
+@function my-dark-theme($primary, $accent, $warn: mat.$green-palette, $success: mat.$green-palette) {
+  @return map-merge(mat.define-dark-theme($primary, $accent, $warn), (success: $success));
+}
+
+//создаю свою тему:
+$my-theme: my-light-theme(
+  $my-primary,
+  $my-accent,
+  $my-warn,
+  $my-success
+);
+
+//применяю ее ко всем компонентам.
+@include mat.all-component-themes($my-theme);
+
+//создаю еще одну тему и применяю ее только к инпутам и селектам:
+$input-primary: mat.define-palette(mat.$grey-palette, 900);
+$input-accent: mat.define-palette($success-palette, 700);
+
+$input-theme: mat.define-light-theme((
+  color: (
+    primary: $input-primary,
+    accent: $input-accent,
+    warn: $my-warn,
+  ))
+);
+
+@include mat.select-theme($input-theme); //не поняла что меняется, может ничего
+@include mat.form-field-theme($input-theme); //primary цвет аутлайна
+@include mat.option-theme($input-theme); //primary цвет текста выбранного варианта
+@include mat.pseudo-checkbox-theme($input-theme); // primary цвет псевдо-чекбокса внутри селекта
+
+//добавляю миксин, чтобы дополнительный цвет фона темы применялся как фон для кнопки
+@mixin _mat-button-theme-property($theme, $property, $hue) {
+  .mdc-button {
+    &.mat-mdc-raised-button {
+      &.mat-success {
+        #{$property}: mat.get-color-from-palette(map.get($theme, success));
+      }
+    }
+  }
+}
+
+//посмотреть еще на выставление цвета через color: mat.get-theme-color($theme, primary, 20);
+
+@include _mat-button-theme-property($my-theme, background-color, 500);
+
+html, body {
+  height: 100vh;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }

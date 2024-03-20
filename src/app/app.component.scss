@@ -1,0 +1,59 @@
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  text-align: center;
+}
+
+// ::ng-deep .mdc-button {
+//  &.mat-mdc-raised-button {
+//   &.mat-success {
+//     background-color: #08e1a9;
+//   }
+//  }
+// }
+
+.button-wrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.input-container {
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.colorful-block {
+  width: 600px;
+  height: 200px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 20%;
+  background: linear-gradient(319deg, #08e1a9, #ff67e1, #6800ff);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 31s ease infinite;
+    -moz-animation: AnimationName 31s ease infinite;
+    animation: AnimationName 31s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
