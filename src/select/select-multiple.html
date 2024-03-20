@@ -1,7 +1,8 @@
 <mat-form-field color="primary" appearance="outline" class="my-field valid" aria-required="true" subscriptSizing="fixed">
-  <!-- <mat-label>Выбирай</mat-label> -->
+  <!-- <mat-label>Лейбл</mat-label> -->
   <mat-select [formControl]="toppings" multiple [errorStateMatcher]="matcher" placeholder="Можно выбрать несколько значений">
     <mat-select-trigger>
+      <!-- если удалить этот тег и его содержимое, варианты будут перечислены через запятую -->
       {{toppings.value?.[0] || ''}}
       <span>
         @if ((toppings.value?.length || 0) > 1) {
@@ -13,8 +14,11 @@
       <mat-option [value]="topping">{{topping}}</mat-option>
     }
   </mat-select>
-  <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+  <!-- <mat-hint>вместо красной ошибки будет подсказка обычным текстом</mat-hint> -->
   @if (toppings.hasError('required')) {
-    <mat-error>Необходимо выбрать значение. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro temporibus dicta asperiores similique eos voluptatum dolorum quos corrupti vitae ipsa quas, unde excepturi eligendi veniam omnis tenetur non magnam vero?</mat-error>
+    <mat-error
+    matTooltip="Необходимо выбрать значение. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro temporibus dicta asperiores similique eos voluptatum dolorum quos corrupti vitae ipsa quas, unde excepturi eligendi veniam omnis tenetur non magnam vero?"
+    [matTooltipPositionAtOrigin]="toppings.hasError('required')">
+      Необходимо выбрать значение. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro temporibus dicta asperiores similique eos voluptatum dolorum quos corrupti vitae ipsa quas, unde excepturi eligendi veniam omnis tenetur non magnam vero?</mat-error>
   }
 </mat-form-field>

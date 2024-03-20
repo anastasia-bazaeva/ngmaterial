@@ -3,6 +3,8 @@ import {FormControl, FormGroupDirective, FormsModule, NgForm, ReactiveFormsModul
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ErrorStateMatcher} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -15,7 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'select-multiple',
   templateUrl: 'select-multiple.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatTooltipModule],
   styleUrl: './select-multi.scss',
 })
 export class SelectMultiple {
